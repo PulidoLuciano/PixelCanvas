@@ -6,9 +6,14 @@ function createColumn(){
     return column;
 }
 
-function createPixel(){
+function createPixel(size){
     let pixel = document.createElement("div");
     pixel.classList.add("pixel");
+
+    pixelSize = `${canvas.clientHeight / size}px`
+
+    pixel.style.height = pixelSize;
+    pixel.style.width = pixelSize;
 
     pixel.addEventListener("mousedown", (event) => {if(event.buttons > 0) pixel.style.backgroundColor = currentColor});
     pixel.addEventListener("mouseenter", (event) => {if(event.buttons > 0) pixel.style.backgroundColor = currentColor});
@@ -23,7 +28,7 @@ function createCanvas(size){
         let column = createColumn();
         
         for(let j = 0; j < size; j++){
-            let pixel = createPixel();
+            let pixel = createPixel(size);
             
             column.appendChild(pixel);
         }
@@ -34,4 +39,4 @@ function createCanvas(size){
 
 let currentColor = "#FF0000";
 
-createCanvas(16);
+createCanvas(64);
