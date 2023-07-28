@@ -38,7 +38,7 @@ body{
 }
 
 .pixel{
-    background-color: #FFFFFF;
+    background-color: rgb(255, 255, 255);
     border: 1px solid #DDDDDD;
 }
 

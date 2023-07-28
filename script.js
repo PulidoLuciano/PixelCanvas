@@ -8,13 +8,17 @@ let rangeSizeSelector = document.querySelector("#rangeSizeSelector");
 let rangeSizeSelectorButton = document.querySelector("#rangeSizeSelectorButton");
 let rangeValue = document.querySelector("#rangeValue");
 
-colorPicker.addEventListener("change", (event) => {currentColor = `${event.target.value}`});
-pencilButton.addEventListener("click", () => {currentColor= colorPicker.value});
-eraserButton.addEventListener("click", () => {currentColor = "#FFFFFF"});
+colorPicker.addEventListener("change", (event) => {currentColor = `${event.target.value}`; disableModes();});
+pencilButton.addEventListener("click", () => {currentColor= colorPicker.value; disableModes();});
+eraserButton.addEventListener("click", () => {currentColor = "#FFFFFF"; disableModes();});
 rangeSizeSelectorButton.addEventListener("click", () => {createCanvas(rangeSizeSelector.value);});
-rangeSizeSelector.addEventListener("input", () => {rangeValue.textContent = rangeSizeSelector.value})
+rangeSizeSelector.addEventListener("input", () => {rangeValue.textContent = rangeSizeSelector.value});
+rainbowButton.addEventListener("click", () => {rainbowMode = true});
+shadowButton.addEventListener("click", () => {shadowMode = true});
 
 let currentColor = colorPicker.value;
+let shadowMode = false;
+let rainbowMode = false;
 
 function createColumn(){
     let column = document.createElement("div");
@@ -30,11 +34,37 @@ function createPixel(size){
 
     pixel.style.height = pixelSize;
     pixel.style.width = pixelSize;
+    pixel.style.backgroundColor = "rgb(255,255,255)";
 
-    pixel.addEventListener("mousedown", (event) => {if(event.buttons > 0) pixel.style.backgroundColor = currentColor});
-    pixel.addEventListener("mouseenter", (event) => {if(event.buttons > 0) pixel.style.backgroundColor = currentColor});
+    pixel.addEventListener("mousedown", (event) => {paintPixel(event)});
+    pixel.addEventListener("mouseenter", (event) => {paintPixel(event)});
 
     return pixel;
+}
+
+function paintPixel(event){
+    if(event.buttons > 0){
+        if(rainbowMode){
+            event.target.style.backgroundColor = `rgb(${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)})`;
+        }else if(shadowMode){
+            event.target.style.backgroundColor = shadowColor(event.target.style.backgroundColor);
+        }else{
+            event.target.style.backgroundColor = currentColor;
+        }
+    }
+}
+
+function shadowColor(color){
+    color = color.slice(color.indexOf("(")+1, color.indexOf(")"));
+    colors = color.split(",");
+    colors = colors.map((x) => parseInt(x.trim(),10));
+    colors = colors.map((x) => {x = x - 25; if(x < 0) x = 0; return x;});
+    return `rgb(${colors[0]},${colors[1]},${colors[2]})`;
+}
+
+function disableModes(){
+    rainbowMode = false;
+    shadowMode = false;
 }
 
 function createCanvas(size){
