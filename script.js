@@ -9,6 +9,10 @@ function createColumn(){
 function createPixel(){
     let pixel = document.createElement("div");
     pixel.classList.add("pixel");
+
+    pixel.addEventListener("mousedown", (event) => {if(event.buttons > 0) pixel.style.backgroundColor = currentColor});
+    pixel.addEventListener("mouseenter", (event) => {if(event.buttons > 0) pixel.style.backgroundColor = currentColor});
+
     return pixel;
 }
 
@@ -27,5 +31,7 @@ function createCanvas(size){
         canvas.appendChild(column);
     }
 }
+
+let currentColor = "#FF0000";
 
 createCanvas(16);
