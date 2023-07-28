@@ -9,6 +9,15 @@ h1{
     font-size: 48px;
 }
 
+button{
+    background-color: #0055FF;
+    border: 2px solid #0000FF;
+    padding: 3px;
+    border-radius: 5px;
+    color: #EEEEEE;
+    height: fit-content;
+}
+
 body{
     background-color: #222222;
 }
@@ -29,6 +38,24 @@ body{
 }
 
 .pixel{
-    background-color: #EEEEEE;
+    background-color: #FFFFFF;
     border: 1px solid #DDDDDD;
+}
+
+#tools{
+    display: flex;
+    width: 480px;
+    margin: 15px auto;
+    justify-content: space-between;
+    color: #EEEEEE;
+}
+
+#rangeSizeSelector{
+    display: block;
+    margin-bottom: 3px;
+}
+
+button:hover{
+    background-color: #0088FF;
+    border: 2px solid #0033FF;
 }
